@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shubendu Das | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="header">
+        <a href="#" class="logo">Shubendu.</a>
+        <nav class="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="bx bx-menu" id="menu-icon"><i class="fas fa-bars"></i></div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Hello, It's Me</h3>
+            <h1>Shubendu Das</h1>
+            <h3>And I'm a <span class="typing-text"></span></h3>
+            <p>A passionate developer and creative designer currently studying at St. Xavier's College. I blend technical expertise with creative vision.</p>
+            <div class="social-media">
+                <a href="https://github.com/shubendu7" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/shubendudas/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/justshubendu/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@Aeronautical_Verse" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+            <a href="#contact" class="btn">Contact Me</a>
+        </div>
+        <div class="home-img">
+            <div class="img-box">
+                <img src="selfphoto.png" alt="Shubendu Das">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2 class="heading">About <span>Me</span></h2>
+            <h3>Education & Journey</h3>
+            <p>I am currently pursuing my degree at <strong>St. Xavier's College</strong>. My academic journey has been marked by consistent excellence and a drive to learn.</p>
+            
+            <div class="education-container">
+                <div class="edu-box">
+                    <i class="fas fa-university"></i>
+                    <h4>St. Xavier's College</h4>
+                    <p>Current Student</p>
+                </div>
+                <div class="edu-box">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>ISC (Class 12)</h4>
+                    <p>Score: <strong>95.25%</strong></p>
+                </div>
+                <div class="edu-box">
+                    <i class="fas fa-school"></i>
+                    <h4>ICSE (Class 10)</h4>
+                    <p>Score: <strong>93.4%</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <h2 class="heading">My <span>Skills</span></h2>
+        <div class="skills-row">
+            <div class="skills-column">
+                <h3 class="title">Coding Skills</h3>
+                <div class="skills-box">
+                    <div class="skill-content">
+                        <div class="progress">
+                            <h3>Java <span>90%</span></h3>
+                            <div class="bar"><span style="width: 90%;"></span></div>
+                        </div>
+                        <div class="progress">
+                            <h3>Web Dev (HTML/CSS/JS) <span>85%</span></h3>
+                            <div class="bar"><span style="width: 85%;"></span></div>
+                        </div>
+                        <div class="progress">
+                            <h3>C Programming <span>80%</span></h3>
+                            <div class="bar"><span style="width: 80%;"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-column">
+                <h3 class="title">Creative Skills</h3>
+                <div class="skills-box">
+                    <div class="skill-content">
+                        <div class="progress">
+                            <h3>Capcut <span>100%</span></h3>
+                            <div class="bar"><span style="width: 100%;"></span></div>
+                        </div>
+                        <div class="progress">
+                            <h3>Canva <span>80%</span></h3>
+                            <div class="bar"><span style="width: 80%;"></span></div>
+                        </div>
+                        <div class="progress">
+                            <h3>Adobe After Effects <span>48%</span></h3>
+                            <div class="bar"><span style="width: 48%;"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="portfolio" id="projects">
+        <h2 class="heading">Latest <span>Projects</span></h2>
+        
+        <div class="portfolio-tabs">
+            <button class="tab-btn active" onclick="openTab('tech')">Tech</button>
+            <button class="tab-btn" onclick="openTab('non-tech')">Non-Tech</button>
+        </div>
+
+        <!-- Tech Projects -->
+        <div id="tech" class="portfolio-container active">
+            <div class="portfolio-box">
+                <i class="fas fa-gamepad"></i>
+                <div class="portfolio-layer">
+                    <h4>Tic Tac Toe</h4>
+                    <p>Interactive web game.</p>
+                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="portfolio-box">
+                <i class="fas fa-calculator"></i>
+                <div class="portfolio-layer">
+                    <h4>Calculator</h4>
+                    <p>Web-based calculator.</p>
+                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="portfolio-box">
+                <i class="fas fa-comments"></i>
+                <div class="portfolio-layer">
+                    <h4>Chat Application</h4>
+                    <p>Java Swing Chat App.</p>
+                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <div class="portfolio-box">
+                <i class="fas fa-clock"></i>
+                <div class="portfolio-layer">
+                    <h4>Digital Clock</h4>
+                    <p>World Clock in Java.</p>
+                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Non-Tech Projects -->
+        <div id="non-tech" class="portfolio-container">
+            <div class="portfolio-box video-box">
+                <i class="fas fa-video"></i>
+                <div class="portfolio-layer">
+                    <h4>Video Editing</h4>
+                    <p>Showcase coming soon.</p>
+                </div>
+            </div>
+            <div class="portfolio-box design-box">
+                <i class="fas fa-pen-nib"></i>
+                <div class="portfolio-layer">
+                    <h4>Canva Designs</h4>
+                    <p>Designs coming soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2 class="heading">Contact <span>Me</span></h2>
+        <form action="#">
+            <div class="input-box">
+                <input type="text" placeholder="Full Name">
+                <input type="email" placeholder="Email Address">
+            </div>
+            <div class="input-box">
+                <input type="number" placeholder="Mobile Number">
+                <input type="text" placeholder="Email Subject">
+            </div>
+            <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+            <input type="submit" value="Send Message" class="btn">
+        </form>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Shubendu Das | All Rights Reserved.</p>
+        </div>
+        <div class="footer-iconTop">
+            <a href="#home"><i class="fas fa-arrow-up"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
