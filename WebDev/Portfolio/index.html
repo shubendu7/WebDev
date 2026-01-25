@@ -35,7 +35,7 @@
 <body>
     <!-- Navbar -->
     <header class="header">
-        <a href="#" class="logo">Shubendu.</a>
+        <a href="#" class="logo">Portfolio</a>
         <nav class="navbar">
             <a href="#home" class="active">Home</a>
             <a href="#about">About</a>
@@ -60,7 +60,11 @@
                 <a href="https://www.instagram.com/justshubendu/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/@Aeronautical_Verse" target="_blank"><i class="fab fa-youtube"></i></a>
             </div>
-            <a href="#contact" class="btn">Contact Me</a>
+            <div class="home-buttons">
+                <a href="#contact" class="btn">Contact Me</a>
+                <a href="#" class="btn">Download CV</a>
+            </div>
+            
         </div>
         <div class="home-img">
             <div class="img-box">
@@ -215,16 +219,17 @@
         <h2 class="heading">Contact <span>Me</span></h2>
         <form action="#">
             <div class="input-box">
-                <input type="text" placeholder="Full Name">
-                <input type="email" placeholder="Email Address">
+                <input type="text" name="fullName" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
             </div>
             <div class="input-box">
-                <input type="number" placeholder="Mobile Number">
-                <input type="text" placeholder="Email Subject">
+                <input type="number" name="mobileNumber" placeholder="Mobile Number">
+                <input type="text" name="emailSubject" placeholder="Email Subject">
             </div>
-            <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+            <textarea name="message" id="" cols="30" rows="10" placeholder="Your Message" required></textarea>
             <input type="submit" value="Send Message" class="btn">
         </form>
+        
     </section>
 
     <footer class="footer">

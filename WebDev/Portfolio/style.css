@@ -130,6 +130,11 @@ section {
     box-shadow: none;
 }
 
+.home-buttons {
+    display: flex;
+    gap: 2rem;
+}
+
 .home-img .img-box {
     width: 31vw;
     height: 31vw;
