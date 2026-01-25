@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .footer-iconTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        .footer-iconTop a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: .8rem;
+            background: var(--primary-color, #6366f1);
+            border-radius: .8rem;
+            text-decoration: none;
+        }
+        .footer-iconTop a i {
+            font-size: 2.4rem;
+            color: #fff;
+        }
+        .footer-iconTop a:hover {
+            box-shadow: 0 0 1rem var(--primary-color, #6366f1);
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -28,7 +52,8 @@
             <h3>Hello, It's Me</h3>
             <h1>Shubendu Das</h1>
             <h3>And I'm a <span class="typing-text"></span></h3>
-            <p>A passionate developer and creative designer currently studying at St. Xavier's College. I blend technical expertise with creative vision.</p>
+            <p>A passionate developer and creative designer currently studying at St. Xavier's College. 
+                I blend technical expertise with creative vision.</p>
             <div class="social-media">
                 <a href="https://github.com/shubendu7" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/shubendudas/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
@@ -39,7 +64,7 @@
         </div>
         <div class="home-img">
             <div class="img-box">
-                <img src="selfPhoto.png" alt="Shubendu Das">
+                <img src="ph.jpeg" alt="Shubendu Das">
             </div>
         </div>
     </section>
@@ -56,16 +81,19 @@
                     <i class="fas fa-university"></i>
                     <h4>St. Xavier's College</h4>
                     <p>Current Student</p>
+                    <p class="stream">B.Sc Computer Science Hons</p>
                 </div>
                 <div class="edu-box">
                     <i class="fas fa-graduation-cap"></i>
                     <h4>ISC (Class 12)</h4>
                     <p>Score: <strong>95.25%</strong></p>
+                    <p class="stream">Julien Day School (Science Stream) </p>
                 </div>
                 <div class="edu-box">
                     <i class="fas fa-school"></i>
                     <h4>ICSE (Class 10)</h4>
                     <p>Score: <strong>93.4%</strong></p>
+                    <p class="stream">Julien Day School (Science Stream)</p>
                 </div>
             </div>
         </div>
@@ -133,7 +161,7 @@
                 <div class="portfolio-layer">
                     <h4>Tic Tac Toe</h4>
                     <p>Interactive web game.</p>
-                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    <a href="http://127.0.0.1:5500/WebDev/Tic-Tac-Toe/Index.html" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
             <div class="portfolio-box">
@@ -141,15 +169,14 @@
                 <div class="portfolio-layer">
                     <h4>Calculator</h4>
                     <p>Web-based calculator.</p>
-                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    <a href="http://127.0.0.1:5500/WebDev/Calculator/index.html" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
             <div class="portfolio-box">
                 <i class="fas fa-comments"></i>
                 <div class="portfolio-layer">
                     <h4>Chat Application</h4>
-                    <p>Java Swing Chat App.</p>
-                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    <p>Coming Soon</p>
                 </div>
             </div>
             <div class="portfolio-box">
@@ -157,7 +184,7 @@
                 <div class="portfolio-layer">
                     <h4>Digital Clock</h4>
                     <p>World Clock in Java.</p>
-                    <a href="https://github.com/shubendu7" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                    <a href="https://github.com/shubendu7/JavaProjects/blob/main/Clock.java" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
         </div>
@@ -168,14 +195,16 @@
                 <i class="fas fa-video"></i>
                 <div class="portfolio-layer">
                     <h4>Video Editing</h4>
-                    <p>Showcase coming soon.</p>
+                    <p>Video Editing Showcase.</p>
+                    <a href="https://drive.google.com/drive/folders/1bnahNfED3iQQYf0MmzWs2XmDKExTEEfK" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
             <div class="portfolio-box design-box">
                 <i class="fas fa-pen-nib"></i>
                 <div class="portfolio-layer">
                     <h4>Canva Designs</h4>
-                    <p>Designs coming soon.</p>
+                    <p>Designs Showcase.</p>
+                    <a href="https://drive.google.com/drive/folders/15PZZhmTlqtHAA6aLc5Kc8tdAbQwl5b0_" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
         </div>
@@ -202,10 +231,10 @@
         <div class="footer-text">
             <p>Copyright &copy; 2023 by Shubendu Das | All Rights Reserved.</p>
         </div>
-        <div class="footer-iconTop">
-            <a href="#home"><i class="fas fa-arrow-up"></i></a>
-        </div>
     </footer>
+    <div class="footer-iconTop">
+        <a href="#home"><i class="fas fa-arrow-up"></i></a>
+    </div>
 
     <script src="script.js"></script>
 </body>

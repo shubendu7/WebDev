@@ -48,7 +48,7 @@ function openTab(tabName) {
 
 // Typing Animation Logic (Simple implementation)
 const textElement = document.querySelector('.typing-text');
-const words = ["Web Developer", "Java Programmer", "Video Editor", "Canva Designer"];
+const words = ["Web Developer", "Programmer", "Video Editor", "Designer", "Content Creator"];
 let wordIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
