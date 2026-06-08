@@ -1,246 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shubendu Das | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .footer-iconTop {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-        }
-        .footer-iconTop a {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            padding: .8rem;
-            background: var(--primary-color, #6366f1);
-            border-radius: .8rem;
-            text-decoration: none;
-        }
-        .footer-iconTop a i {
-            font-size: 2.4rem;
-            color: #fff;
-        }
-        .footer-iconTop a:hover {
-            box-shadow: 0 0 1rem var(--primary-color, #6366f1);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shubendu Das — Developer & Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #04040e;
+      --bg2:      #07071a;
+      --bg3:      #0c0c25;
+      --cyan:     #00e5ff;
+      --purple:   #7c3aed;
+      --violet:   #a855f7;
+      --pink:     #ec4899;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+      --card-bg:  rgba(255,255,255,0.03);
+      --card-bd:  rgba(255,255,255,0.07);
+      --c-glow:   rgba(0,229,255,0.14);
+      --p-glow:   rgba(168,85,247,0.14);
+    }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; overflow-x:hidden; }
+    body {
+      font-family:'DM Sans',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+      cursor:none;
+    }
+
+    /* ─── CURSOR ─── */
+    .c-dot, .c-ring {
+      position:fixed; top:0; left:0;
+      border-radius:50%; pointer-events:none; z-index:9999;
+    }
+    .c-dot {
+      width:7px; height:7px;
+      background:var(--cyan);
+      box-shadow:0 0 10px var(--cyan),0 0 20px var(--cyan);
+      transition:opacity .15s;
+      margin:-3.5px 0 0 -3.5px;
+    }
+    .c-ring {
+      width:34px; height:34px;
+      border:1.5px solid rgba(0,229,255,.5);
+      transition:width .2s,height .2s,border-color .2s;
+      margin:-17px 0 0 -17px;
+      z-index:9998;
+    }
+    .c-ring.hover { width:48px; height:48px; border-color:var(--violet); }
+    .c-dot.hide  { opacity:0; }
+
+    /* ─── LOADER ─── */
+    #loader {
+      position:fixed; inset:0;
+      background:var(--bg);
+      z-index:10000;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:20px;
+      transition:opacity .6s ease, visibility .6s ease;
+    }
+    #loader.gone { opacity:0; visibility:hidden; }
+    .ld-title {
+      font-family:'Orbitron',monospace;
+      font-size:1.8rem; font-weight:900;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      letter-spacing:.1em;
+    }
+    .ld-label {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.72rem; letter-spacing:.3em; color:var(--cyan);
+      animation:blink-fade 1s ease infinite;
+    }
+    .ld-bar { width:220px; height:2px; background:rgba(255,255,255,.1); border-radius:2px; overflow:hidden; }
+    .ld-fill {
+      height:100%;
+      background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+      animation:fill 2.2s ease forwards;
+    }
+    @keyframes fill { from{width:0} to{width:100%} }
+    @keyframes blink-fade { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    /* ─── CANVAS ─── */
+    #cv {
+      position:fixed; inset:0;
+      pointer-events:none; z-index:0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      padding:1.2rem 5rem;
+      display:flex; align-items:center; justify-content:space-between;
+      transition:background .4s,border-color .4s,backdrop-filter .4s;
+    }
+    nav.on {
+      background:rgba(4,4,14,.88);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      backdrop-filter:blur(14px);
+    }
+    .logo {
+      font-family:'Orbitron',monospace;
+      font-weight:900; font-size:1.35rem; letter-spacing:.05em;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      text-decoration:none;
+    }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a {
+      color:var(--muted); text-decoration:none;
+      font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; font-weight:500;
+      transition:color .2s; position:relative; cursor:none;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:0;
+      width:0; height:1px; background:var(--cyan);
+      transition:width .3s ease;
+    }
+    .nav-links a:hover { color:var(--cyan); }
+    .nav-links a:hover::after { width:100%; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height:100vh; display:flex; align-items:center;
+      padding:0 5rem; position:relative; overflow:hidden;
+    }
+    .hero-wrap {
+      max-width:1200px; margin:0 auto; width:100%;
+      display:grid; grid-template-columns:1fr auto;
+      align-items:center; gap:4rem;
+      transition:transform .08s linear;
+    }
+    .hi-line {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.88rem; color:var(--cyan);
+      letter-spacing:.25em; text-transform:uppercase;
+      opacity:0; animation:up .5s ease .6s forwards;
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .wave { display:inline-block; animation:wave 2.4s ease .8s infinite; }
+    @keyframes wave {
+      0%,100%{transform:rotate(0)} 20%{transform:rotate(22deg)} 60%{transform:rotate(-12deg)}
+    }
+    h1.name {
+      font-family:'Orbitron',monospace;
+      font-size:clamp(2.4rem,4.8vw,4.4rem);
+      font-weight:900; line-height:1.05;
+      margin:.5rem 0;
+      opacity:0; animation:up .55s ease .8s forwards;
+    }
+    h1.name .first { color:var(--text); }
+    h1.name .last {
+      display:block;
+      background:linear-gradient(135deg,var(--cyan),var(--violet) 60%,var(--pink));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .role-line {
+      font-size:clamp(.95rem,2vw,1.25rem);
+      font-weight:300; color:var(--muted);
+      margin:1rem 0 1.8rem;
+      opacity:0; animation:up .55s ease 1s forwards;
+      display:flex; align-items:center; gap:.4rem;
+      min-height:2em;
+    }
+    #tw { color:var(--cyan); font-weight:500; }
+    #tw::after { content:'|'; animation:blink .7s ease infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .bio {
+      max-width:520px; font-size:.95rem;
+      color:var(--muted); line-height:1.85;
+      opacity:0; animation:up .55s ease 1.2s forwards;
+      margin-bottom:2.2rem;
+    }
+    .cta-row {
+      display:flex; gap:1rem;
+      opacity:0; animation:up .55s ease 1.4s forwards;
+    }
+    .btn-p {
+      padding:.75rem 1.9rem;
+      background:linear-gradient(135deg,var(--cyan),var(--violet));
+      color:#04040e; border:none; border-radius:5px;
+      font-family:'DM Sans',sans-serif;
+      font-size:.85rem; font-weight:700;
+      text-decoration:none; letter-spacing:.06em;
+      text-transform:uppercase; cursor:none;
+      transition:transform .2s,box-shadow .2s;
+      display:inline-block;
+    }
+    .btn-p:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,229,255,.28); }
+    .btn-s {
+      padding:.75rem 1.9rem;
+      background:transparent; color:var(--text);
+      border:1px solid rgba(255,255,255,.14); border-radius:5px;
+      font-family:'DM Sans',sans-serif;
+      font-size:.85rem; font-weight:500;
+      text-decoration:none; letter-spacing:.06em;
+      text-transform:uppercase; cursor:none;
+      transition:all .2s;
+      display:inline-block;
+    }
+    .btn-s:hover { border-color:var(--cyan); color:var(--cyan); background:rgba(0,229,255,.05); }
+    .socials {
+      display:flex; gap:.8rem; margin-top:2rem;
+      opacity:0; animation:up .55s ease 1.6s forwards;
+    }
+    .si {
+      width:40px; height:40px;
+      border:1px solid rgba(255,255,255,.1); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      text-decoration:none; color:var(--muted);
+      transition:all .25s; cursor:none;
+    }
+    .si:hover {
+      border-color:var(--cyan); color:var(--cyan);
+      background:rgba(0,229,255,.07);
+      transform:translateY(-3px);
+      box-shadow:0 8px 20px rgba(0,229,255,.14);
+    }
+
+    /* Avatar */
+    .av-wrap {
+      display:flex; flex-direction:column; align-items:center; gap:.8rem;
+      opacity:0; animation:fade .8s ease 1.8s forwards;
+    }
+    .av-ring {
+      width:260px; height:260px;
+      border-radius:50%; position:relative;
+    }
+    .av-ring::before {
+      content:''; position:absolute; inset:-3px; border-radius:50%;
+      background:conic-gradient(from 0deg,var(--cyan),var(--violet),var(--pink),var(--cyan));
+      animation:spin 4s linear infinite;
+    }
+    .av-ring::after {
+      content:''; position:absolute; inset:-10px; border-radius:50%;
+      background:conic-gradient(from 0deg,transparent,rgba(0,229,255,.1),transparent);
+      animation:spin 7s linear infinite reverse;
+    }
+    @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    .av-img {
+      width:100%; height:100%; border-radius:50%;
+      object-fit:cover; position:relative; z-index:1;
+      border:4px solid var(--bg);
+    }
+    .av-loc {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.75rem; color:var(--muted);
+      display:flex; align-items:center; gap:.4rem;
+    }
+    .loc-dot {
+      width:8px; height:8px; border-radius:50%;
+      background:#22c55e;
+      box-shadow:0 0 8px #22c55e;
+      animation:pulse-g 2s ease infinite;
+    }
+    @keyframes pulse-g { 0%,100%{box-shadow:0 0 8px #22c55e} 50%{box-shadow:0 0 18px #22c55e} }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:.4rem;
+      font-family:'JetBrains Mono',monospace;
+      font-size:.65rem; letter-spacing:.25em; color:var(--muted);
+      text-transform:uppercase;
+      opacity:0; animation:fade 1s ease 2.2s forwards;
+    }
+    .sh-line {
+      width:1px; height:38px;
+      background:linear-gradient(to bottom,var(--cyan),transparent);
+      animation:sh-anim 2s ease infinite;
+    }
+    @keyframes sh-anim {
+      0%{opacity:0;transform:scaleY(.5);transform-origin:top}
+      50%{opacity:1} 100%{opacity:0;transform:scaleY(1);transform-origin:top}
+    }
+
+    /* ─── SECTION BASE ─── */
+    .sec {
+      padding:6rem 5rem;
+      max-width:1200px; margin:0 auto;
+    }
+    .sl {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.72rem; letter-spacing:.3em; color:var(--cyan);
+      text-transform:uppercase; margin-bottom:.5rem;
+      opacity:0; transform:translateY(18px);
+      transition:all .5s ease;
+    }
+    .st {
+      font-family:'Orbitron',monospace;
+      font-size:clamp(1.7rem,2.8vw,2.4rem); font-weight:700;
+      color:var(--text); margin-bottom:2.8rem;
+      opacity:0; transform:translateY(18px);
+      transition:all .5s ease .1s;
+    }
+    .sdiv {
+      width:55px; height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--violet));
+      margin-bottom:2.8rem;
+      opacity:0; transition:all .5s ease .2s;
+    }
+    .sl.vis, .st.vis, .sdiv.vis { opacity:1; transform:translateY(0); }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:3rem; align-items:start;
+    }
+    .about-txt p {
+      color:var(--muted); line-height:1.9; font-size:.93rem; margin-bottom:1.5rem;
+      opacity:0; transform:translateY(18px);
+      transition:opacity .5s ease, transform .5s ease;
+    }
+    .about-txt p.vis { opacity:1; transform:translateY(0); }
+    .about-txt p strong { color:var(--text); }
+    .hi-cards { display:flex; flex-direction:column; gap:.9rem; }
+    .hi-card {
+      background:var(--card-bg); border:1px solid var(--card-bd);
+      border-radius:12px; padding:1.2rem 1.4rem;
+      display:flex; align-items:flex-start; gap:1rem;
+      opacity:0; transform:translateX(28px);
+      transition:all .4s ease; cursor:default;
+    }
+    .hi-card.vis { opacity:1; transform:translateX(0); }
+    .hi-card:hover {
+      border-color:rgba(0,229,255,.28);
+      background:rgba(0,229,255,.025);
+      transform:translateX(5px) !important;
+    }
+    .hi-ico { font-size:1.35rem; flex-shrink:0; }
+    .hi-info h4 { font-size:.88rem; font-weight:600; color:var(--text); margin-bottom:.2rem; }
+    .hi-info p { font-size:.78rem; color:var(--muted); margin:0; }
+
+    /* ─── SKILLS ─── */
+    #skills {
+      background:rgba(7,7,26,.55);
+      border-top:1px solid rgba(255,255,255,.04);
+      border-bottom:1px solid rgba(255,255,255,.04);
+      padding:6rem 5rem;
+    }
+    #skills .inner { max-width:1200px; margin:0 auto; }
+    .sk-cats { display:flex; flex-direction:column; gap:2.5rem; }
+    .sk-cat h3 {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.76rem; letter-spacing:.22em; color:var(--violet);
+      text-transform:uppercase; margin-bottom:1rem;
+    }
+    .sk-tags { display:flex; flex-wrap:wrap; gap:.55rem; }
+    .sk-tag {
+      padding:.42rem 1rem;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:40px; font-size:.8rem; font-weight:500; color:var(--text);
+      transition:all .25s ease;
+      opacity:0; transform:scale(.82);
+      cursor:default;
+    }
+    .sk-tag.vis { opacity:1; transform:scale(1); }
+    .sk-tag:hover {
+      border-color:var(--cyan); color:var(--cyan);
+      background:rgba(0,229,255,.06);
+      box-shadow:0 0 14px rgba(0,229,255,.14);
+    }
+
+    /* ─── PROJECTS ─── */
+    .proj-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:1.4rem;
+    }
+    .pc {
+      background:var(--card-bg); border:1px solid var(--card-bd);
+      border-radius:16px; padding:1.8rem;
+      position:relative; overflow:hidden;
+      opacity:0; transform:translateY(28px);
+      transition:all .4s ease; cursor:none;
+    }
+    .pc.vis { opacity:1; transform:translateY(0); }
+    .pc::before {
+      content:''; position:absolute; inset:0; border-radius:16px;
+      background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(0,229,255,.07), transparent 60%);
+      opacity:0; transition:opacity .3s;
+    }
+    .pc:hover { border-color:rgba(0,229,255,.28); transform:translateY(-4px) !important; box-shadow:0 20px 40px rgba(0,0,0,.35),0 0 40px rgba(0,229,255,.05); }
+    .pc:hover::before { opacity:1; }
+    .pc-accent {
+      position:absolute; top:0; right:0;
+      width:80px; height:80px;
+      background:radial-gradient(circle,rgba(0,229,255,.08),transparent 70%);
+      border-radius:0 16px 0 80px;
+    }
+    .pc-lang {
+      display:inline-flex; align-items:center; gap:.4rem;
+      font-family:'JetBrains Mono',monospace;
+      font-size:.72rem; color:var(--muted); margin-bottom:1rem;
+    }
+    .ld { width:10px; height:10px; border-radius:50%; }
+    .lc  { background:#5555aa; }
+    .lcp { background:#f34b7d; }
+    .lj  { background:#b07219; }
+    .lpy { background:#3572A5; }
+    .lh  { background:#e34c26; }
+    .pc-title {
+      font-family:'Orbitron',monospace;
+      font-size:.95rem; font-weight:700; color:var(--text);
+      margin-bottom:.7rem; letter-spacing:.02em;
+    }
+    .pc-desc { font-size:.83rem; color:var(--muted); line-height:1.7; margin-bottom:1.5rem; }
+    .pc-link {
+      font-family:'JetBrains Mono',monospace;
+      font-size:.78rem; color:var(--cyan); text-decoration:none;
+      letter-spacing:.05em;
+      display:inline-flex; align-items:center; gap:.4rem;
+      transition:gap .2s;
+    }
+    .pc-link:hover { gap:.8rem; }
+
+    /* ─── CONNECT ─── */
+    #connect {
+      background:rgba(7,7,26,.55);
+      border-top:1px solid rgba(255,255,255,.04);
+      padding:6rem 5rem;
+    }
+    #connect .inner { max-width:1200px; margin:0 auto; }
+    .conn-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+      gap:1rem;
+    }
+    .cc {
+      background:var(--card-bg); border:1px solid var(--card-bd);
+      border-radius:12px; padding:1.5rem;
+      text-align:center; text-decoration:none; color:var(--text);
+      transition:all .3s ease;
+      display:flex; flex-direction:column; align-items:center; gap:.7rem;
+      opacity:0; transform:scale(.88);
+      cursor:none;
+    }
+    .cc.vis { opacity:1; transform:scale(1); }
+    .cc:hover { transform:scale(1.04) translateY(-3px) !important; box-shadow:0 14px 34px rgba(0,0,0,.3); }
+    .cc.li:hover  { border-color:#0077b5; background:rgba(0,119,181,.06); }
+    .cc.gh:hover  { border-color:#e2e8f0; background:rgba(255,255,255,.04); }
+    .cc.yt:hover  { border-color:#ff0000; background:rgba(255,0,0,.05); }
+    .cc.ig:hover  { border-color:#e4405f; background:rgba(228,64,95,.05); }
+    .cc.tw:hover  { border-color:#1da1f2; background:rgba(29,161,242,.05); }
+    .cc.em:hover  { border-color:var(--cyan); background:var(--c-glow); }
+    .cc-plat { font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+    .cc-hand { font-size:.82rem; font-weight:500; color:var(--text); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding:2.8rem 5rem; border-top:1px solid rgba(255,255,255,.06);
+      text-align:center; color:var(--muted);
+      font-family:'JetBrains Mono',monospace;
+      font-size:.75rem; letter-spacing:.08em;
+    }
+    footer span { color:var(--cyan); }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes up   { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fade { from{opacity:0} to{opacity:1} }
+
+    /* ─── REVEAL CLASS ─── */
+    .rv {
+      opacity:0; transform:translateY(22px);
+      transition:opacity .55s ease, transform .55s ease;
+    }
+    .rv.vis { opacity:1; transform:translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:900px){
+      nav { padding:1rem 2rem; }
+      .nav-links { display:none; }
+      #hero { padding:0 2rem; }
+      .hero-wrap { grid-template-columns:1fr; text-align:center; }
+      .av-wrap { display:none; }
+      .cta-row, .socials { justify-content:center; }
+      .sec, #skills, #connect { padding:4rem 2rem; }
+      .about-grid { grid-template-columns:1fr; }
+      .hi-card.vis { transform:translateX(0) !important; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <header class="header">
-        <a href="#" class="logo">Portfolio</a>
-        <nav class="navbar">
-            <a href="#home" class="active">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
-        <div class="bx bx-menu" id="menu-icon"><i class="fas fa-bars"></i></div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="home" id="home">
-        <div class="home-content">
-            <h3>Hello, It's Me</h3>
-            <h1>Shubendu Das</h1>
-            <h3>And I'm a <span class="typing-text"></span></h3>
-            <p>A passionate developer and creative designer currently studying at St. Xavier's College. 
-                I blend technical expertise with creative vision.</p>
-            <div class="social-media">
-                <a href="https://github.com/shubendu7" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/shubendudas/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.instagram.com/justshubendu/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@Aeronautical_Verse" target="_blank"><i class="fab fa-youtube"></i></a>
-            </div>
-            <div class="home-buttons">
-                <a href="#contact" class="btn">Contact Me</a>
-                <a href="SHUBENDU DAS CV.pdf" target="_blank" class="btn">Download CV</a>
-            </div>
-            
-        </div>
-        <div class="home-img">
-            <div class="img-box">
-                <img src="CVpic.jpeg" alt="Shubendu Das">
-            </div>
-        </div>
-    </section>
+<!-- Cursor -->
+<div class="c-dot" id="cd"></div>
+<div class="c-ring" id="cr"></div>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-content">
-            <h2 class="heading">About <span>Me</span></h2>
-            <h3>Education & Journey</h3>
-            <p>I am currently pursuing my degree at <strong>St. Xavier's College</strong>. My academic journey has been marked by consistent excellence and a drive to learn.</p>
-            
-            <div class="education-container">
-                <div class="edu-box">
-                    <i class="fas fa-university"></i>
-                    <h4>St. Xavier's College</h4>
-                    <p>Current Student</p>
-                    <p class="stream">B.Sc Computer Science Hons</p>
-                </div>
-                <div class="edu-box">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h4>ISC (Class 12)</h4>
-                    <p>Score: <strong>95.25%</strong></p>
-                    <p class="stream">Julien Day School (Science Stream) </p>
-                </div>
-                <div class="edu-box">
-                    <i class="fas fa-school"></i>
-                    <h4>ICSE (Class 10)</h4>
-                    <p>Score: <strong>93.4%</strong></p>
-                    <p class="stream">Julien Day School (Science Stream)</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Loader -->
+<div id="loader">
+  <div class="ld-title">SD</div>
+  <div class="ld-label">Loading portfolio...</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
 
-    <!-- Skills Section -->
-    <section class="skills" id="skills">
-        <h2 class="heading">My <span>Skills</span></h2>
-        <div class="skills-row">
-            <div class="skills-column">
-                <h3 class="title">Coding Skills</h3>
-                <div class="skills-box">
-                    <div class="skill-content">
-                        <div class="progress">
-                            <h3>Java <span>90%</span></h3>
-                            <div class="bar"><span style="width: 90%;"></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Web Dev (HTML/CSS/JS) <span>85%</span></h3>
-                            <div class="bar"><span style="width: 85%;"></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>C Programming <span>80%</span></h3>
-                            <div class="bar"><span style="width: 80%;"></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Particle canvas -->
+<canvas id="cv"></canvas>
 
-            <div class="skills-column">
-                <h3 class="title">Creative Skills</h3>
-                <div class="skills-box">
-                    <div class="skill-content">
-                        <div class="progress">
-                            <h3>Capcut <span>100%</span></h3>
-                            <div class="bar"><span style="width: 100%;"></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Canva <span>80%</span></h3>
-                            <div class="bar"><span style="width: 80%;"></span></div>
-                        </div>
-                        <div class="progress">
-                            <h3>Adobe After Effects <span>48%</span></h3>
-                            <div class="bar"><span style="width: 48%;"></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ─── NAVBAR ─── -->
+<nav id="nav">
+  <a href="#hero" class="logo">SD.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#connect">Contact</a></li>
+  </ul>
+</nav>
 
-    <!-- Projects Section -->
-    <section class="portfolio" id="projects">
-        <h2 class="heading">Latest <span>Projects</span></h2>
-        
-        <div class="portfolio-tabs">
-            <button class="tab-btn active" onclick="openTab('tech')">Tech</button>
-            <button class="tab-btn" onclick="openTab('non-tech')">Non-Tech</button>
-        </div>
-
-        <!-- Tech Projects -->
-        <div id="tech" class="portfolio-container active">
-            <div class="portfolio-box">
-                <i class="fas fa-gamepad"></i>
-                <div class="portfolio-layer">
-                    <h4>Tic Tac Toe</h4>
-                    <p>Interactive web game.</p>
-                    <a href="https://shubendugame1.netlify.app/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="portfolio-box">
-                <i class="fas fa-calculator"></i>
-                <div class="portfolio-layer">
-                    <h4>Calculator</h4>
-                    <p>Web-based calculator.</p>
-                    <a href="https://shubenducal.netlify.app/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="portfolio-box">
-                <i class="fas fa-comments"></i>
-                <div class="portfolio-layer">
-                    <h4>Chat Application</h4>
-                    <p>Coming Soon</p>
-                </div>
-            </div>
-            <div class="portfolio-box">
-                <i class="fas fa-clock"></i>
-                <div class="portfolio-layer">
-                    <h4>Digital Clock</h4>
-                    <p>World Clock in Java.</p>
-                    <a href="https://github.com/shubendu7/JavaProjects/blob/main/Clock.java" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Non-Tech Projects -->
-        <div id="non-tech" class="portfolio-container">
-            <div class="portfolio-box video-box">
-                <i class="fas fa-video"></i>
-                <div class="portfolio-layer">
-                    <h4>Video Editing</h4>
-                    <p>Video Editing Showcase.</p>
-                    <a href="https://drive.google.com/drive/folders/1bnahNfED3iQQYf0MmzWs2XmDKExTEEfK" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-            <div class="portfolio-box design-box">
-                <i class="fas fa-pen-nib"></i>
-                <div class="portfolio-layer">
-                    <h4>Canva Designs</h4>
-                    <p>Designs Showcase.</p>
-                    <a href="https://drive.google.com/drive/folders/15PZZhmTlqtHAA6aLc5Kc8tdAbQwl5b0_" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <h2 class="heading">Contact <span>Me</span></h2>
-        <form action="#">
-            <div class="input-box">
-                <input type="text" name="fullName" placeholder="Full Name" required>
-                <input type="email" name="email" placeholder="Email Address" required>
-            </div>
-            <div class="input-box">
-                <input type="number" name="mobileNumber" placeholder="Mobile Number">
-                <input type="text" name="emailSubject" placeholder="Email Subject">
-            </div>
-            <textarea name="message" id="" cols="30" rows="10" placeholder="Your Message" required></textarea>
-            <input type="submit" value="Send Message" class="btn">
-        </form>
-        
-    </section>
-
-    <footer class="footer">
-        <div class="footer-text">
-            <p>Copyright &copy; 2023 by Shubendu Das | All Rights Reserved.</p>
-        </div>
-    </footer>
-    <div class="footer-iconTop">
-        <a href="#home"><i class="fas fa-arrow-up"></i></a>
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-wrap" id="hw">
+    <div>
+      <p class="hi-line"><span class="wave">👋</span>&nbsp; Hello, World!</p>
+      <h1 class="name">
+        <span class="first">Shubendu</span>
+        <span class="last">Das.</span>
+      </h1>
+      <div class="role-line">I'm a&nbsp;<span id="tw"></span></div>
+      <p class="bio">
+        Aspiring problem-solver with a passion for clean code, practical learning, and real-world
+        projects. Combining engineering with creativity — I build software by day and create visual
+        content through photography, design, and video editing.
+      </p>
+      <div class="cta-row">
+        <a href="#projects" class="btn-p">View Projects</a>
+        <a href="#connect" class="btn-s">Get in Touch</a>
+      </div>
+      <div class="socials">
+        <a href="https://linkedin.com/in/shubendudas" target="_blank" class="si" title="LinkedIn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://github.com/shubendu7" target="_blank" class="si" title="GitHub">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+        <a href="https://x.com/ShubenduDas7" target="_blank" class="si" title="X / Twitter">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://youtube.com/@Aeronautical_Verse" target="_blank" class="si" title="YouTube">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#04040e"/></svg>
+        </a>
+        <a href="https://instagram.com/justshubendu" target="_blank" class="si" title="Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:shubendudas395@gmail.com" class="si" title="Email">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
     </div>
+    <div class="av-wrap">
+      <div class="av-ring">
+        <img src="https://avatars.githubusercontent.com/u/153055668?v=4" alt="Shubendu Das" class="av-img" />
+      </div>
+      <div class="av-loc"><div class="loc-dot"></div>Kolkata, West Bengal</div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="sh-line"></div>scroll</div>
+</section>
 
-    <script src="script.js"></script>
+<!-- ─── ABOUT ─── -->
+<section class="sec" id="about">
+  <p class="sl">01 — About</p>
+  <h2 class="st">Who Am I?</h2>
+  <div class="sdiv"></div>
+  <div class="about-grid">
+    <div class="about-txt">
+      <p>I'm <strong>Shubendu Das</strong>, an aspiring developer from <strong>Kolkata, West Bengal</strong> with a deep passion for building things that matter. My journey spans writing efficient algorithms in C/C++ to crafting full-stack web applications and AI-powered tools.</p>
+      <p>Currently diving deep into <strong>Data Structures &amp; Algorithms</strong>, <strong>Full-Stack Development</strong>, <strong>Docker</strong>, and <strong>Generative AI</strong>. I thrive at the intersection of engineering and creativity.</p>
+      <p>Beyond code, I run <strong>Aeronautical Verse</strong> — a YouTube channel where I blend my love for <strong>photography, design, and video editing</strong> with genuine storytelling.</p>
+    </div>
+    <div class="hi-cards">
+      <div class="hi-card"><div class="hi-ico">🚀</div><div class="hi-info"><h4>Currently Building</h4><p>Web Development, Python Automation &amp; AI-powered Projects</p></div></div>
+      <div class="hi-card"><div class="hi-ico">🌱</div><div class="hi-info"><h4>Currently Learning</h4><p>DSA, Full-Stack Development, Docker &amp; GenAI</p></div></div>
+      <div class="hi-card"><div class="hi-ico">🤝</div><div class="hi-info"><h4>Looking to Collaborate</h4><p>Open Source, FinTech, AI &amp; Innovative Student Projects</p></div></div>
+      <div class="hi-card"><div class="hi-ico">⚡</div><div class="hi-info"><h4>Fun Fact</h4><p>Codes by day, creates visual content through photography &amp; video editing</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<div id="skills">
+  <div class="inner">
+    <p class="sl">02 — Skills</p>
+    <h2 class="st">Tech Stack</h2>
+    <div class="sdiv"></div>
+    <div class="sk-cats">
+      <div class="sk-cat rv"><h3>🚀 Programming &amp; Backend</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">C</span><span class="sk-tag">C++</span><span class="sk-tag">Java</span>
+          <span class="sk-tag">Python</span><span class="sk-tag">JavaScript</span><span class="sk-tag">Node.js</span>
+          <span class="sk-tag">Flask</span><span class="sk-tag">MySQL</span>
+        </div>
+      </div>
+      <div class="sk-cat rv"><h3>🎨 Frontend &amp; Design</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">Figma</span>
+          <span class="sk-tag">Canva</span><span class="sk-tag">Adobe Premiere Pro</span><span class="sk-tag">Adobe After Effects</span>
+        </div>
+      </div>
+      <div class="sk-cat rv"><h3>⚙️ Infrastructure &amp; Data Science</h3>
+        <div class="sk-tags">
+          <span class="sk-tag">Git</span><span class="sk-tag">GitHub</span><span class="sk-tag">Cloudflare</span>
+          <span class="sk-tag">Netlify</span><span class="sk-tag">Azure</span><span class="sk-tag">NumPy</span>
+          <span class="sk-tag">Pandas</span><span class="sk-tag">Docker</span><span class="sk-tag">GenAI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROJECTS ─── -->
+<section class="sec" id="projects">
+  <p class="sl">03 — Projects</p>
+  <h2 class="st">Featured Work</h2>
+  <div class="sdiv"></div>
+  <div class="proj-grid">
+    <div class="pc">
+      <div class="pc-accent"></div>
+      <div class="pc-lang"><span class="ld lc"></span>C</div>
+      <h3 class="pc-title">CProjects</h3>
+      <p class="pc-desc">A collection of practical C programming projects focused on core concepts, logic building, and hands-on problem solving. Ideal for students and beginners stepping into systems programming.</p>
+      <a href="https://github.com/shubendu7/CProjects" target="_blank" class="pc-link">View on GitHub &rarr;</a>
+    </div>
+    <div class="pc">
+      <div class="pc-accent"></div>
+      <div class="pc-lang"><span class="ld lj"></span>Java</div>
+      <h3 class="pc-title">JavaProjects</h3>
+      <p class="pc-desc">A Java-based digital clock displaying the current system time in real time using GUI components — a great exploration of time handling and basic GUI programming in Java.</p>
+      <a href="https://github.com/shubendu7/JavaProjects" target="_blank" class="pc-link">View on GitHub &rarr;</a>
+    </div>
+    <div class="pc">
+      <div class="pc-accent"></div>
+      <div class="pc-lang"><span class="ld lpy"></span>Python</div>
+      <h3 class="pc-title">PythonProg</h3>
+      <p class="pc-desc">Exploring Python through automation scripts, data processing tools, and algorithmic challenges. A growing collection of pythonic solutions to everyday problems.</p>
+      <a href="https://github.com/shubendu7/PythonProg" target="_blank" class="pc-link">View on GitHub &rarr;</a>
+    </div>
+    <div class="pc">
+      <div class="pc-accent"></div>
+      <div class="pc-lang"><span class="ld lh"></span>HTML / CSS / JS</div>
+      <h3 class="pc-title">WebDev</h3>
+      <p class="pc-desc">Full-stack web development experiments covering frontend interfaces, responsive designs, and web application prototypes spanning modern HTML, CSS, and JavaScript.</p>
+      <a href="https://github.com/shubendu7/WebDev" target="_blank" class="pc-link">View on GitHub &rarr;</a>
+    </div>
+    <div class="pc">
+      <div class="pc-accent"></div>
+      <div class="pc-lang"><span class="ld lh"></span>HTML</div>
+      <h3 class="pc-title">Synthetix</h3>
+      <p class="pc-desc">Collaborative project built for the ET Gen AI Hackathon, merging AI capabilities with web technology to create intelligent, generative solutions at the cutting edge.</p>
+      <a href="https://github.com/abhinandan5202007-del/Synthetix" target="_blank" class="pc-link">View on GitHub &rarr;</a>
+    </div>
+    <div class="pc">
+      <div class="pc-accent"></div>
+      <div class="pc-lang"><span class="ld lh"></span>HTML</div>
+      <h3 class="pc-title">Website</h3>
+      <p class="pc-desc">Personal portfolio website showcasing projects, skills, and experiences — a live demonstration of design sensibility and development skill working in harmony.</p>
+      <a href="https://github.com/shubendu7/Website" target="_blank" class="pc-link">View on GitHub &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONNECT ─── -->
+<div id="connect">
+  <div class="inner sec" style="padding-left:0;padding-right:0;max-width:100%">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="sl">04 — Connect</p>
+      <h2 class="st">Let's Build Together</h2>
+      <div class="sdiv"></div>
+      <div class="conn-grid">
+        <a href="https://linkedin.com/in/shubendudas" target="_blank" class="cc li">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#0077b5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <div class="cc-plat">LinkedIn</div><div class="cc-hand">shubendudas</div>
+        </a>
+        <a href="https://github.com/shubendu7" target="_blank" class="cc gh">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <div class="cc-plat">GitHub</div><div class="cc-hand">shubendu7</div>
+        </a>
+        <a href="https://youtube.com/@Aeronautical_Verse" target="_blank" class="cc yt">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="#ff0000"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#fff"/></svg>
+          <div class="cc-plat">YouTube</div><div class="cc-hand">@Aeronautical_Verse</div>
+        </a>
+        <a href="https://instagram.com/justshubendu" target="_blank" class="cc ig">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#e4405f" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <div class="cc-plat">Instagram</div><div class="cc-hand">justshubendu</div>
+        </a>
+        <a href="https://x.com/ShubenduDas7" target="_blank" class="cc tw">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <div class="cc-plat">X / Twitter</div><div class="cc-hand">@ShubenduDas7</div>
+        </a>
+        <a href="mailto:shubendudas395@gmail.com" class="cc em">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div class="cc-plat">Email</div><div class="cc-hand">shubendudas395</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>Crafted with <span>♥</span> by <span>Shubendu Das</span> &middot; Kolkata, India &middot; 2025</p>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   LOADER
+══════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('gone'), 2400);
+});
+
+/* ══════════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════════ */
+const CD = document.getElementById('cd');
+const CR = document.getElementById('cr');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  CD.style.transform = `translate(${mx}px,${my}px)`;
+});
+
+(function ringLoop() {
+  rx += (mx - rx) * 0.1;
+  ry += (my - ry) * 0.1;
+  CR.style.transform = `translate(${rx}px,${ry}px)`;
+  requestAnimationFrame(ringLoop);
+})();
+
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => { CR.classList.add('hover'); CD.classList.add('hide'); });
+  el.addEventListener('mouseleave', () => { CR.classList.remove('hover'); CD.classList.remove('hide'); });
+});
+
+/* ══════════════════════════════════════════
+   PARTICLE CANVAS
+══════════════════════════════════════════ */
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+let W, H, pts = [], pmx = null, pmy = null;
+
+function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+document.addEventListener('mousemove', e => { pmx = e.clientX; pmy = e.clientY; });
+
+class Pt {
+  constructor(init) {
+    this.x = Math.random() * (typeof W !== 'undefined' ? W : window.innerWidth);
+    this.y = init ? Math.random() * (typeof H !== 'undefined' ? H : window.innerHeight) : (typeof H !== 'undefined' ? H : window.innerHeight) + 10;
+    this.r = Math.random() * 1.4 + 0.3;
+    this.vx = (Math.random() - .5) * .38;
+    this.vy = -(Math.random() * .55 + .18);
+    this.a = Math.random() * .45 + .1;
+    this.col = Math.random() > .55 ? '0,229,255' : '168,85,247';
+  }
+  tick() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.y < -10) { this.x = Math.random()*W; this.y = H+10; }
+    if (this.x<0||this.x>W) this.vx *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${this.col},${this.a})`;
+    ctx.fill();
+  }
+}
+
+for(let i=0;i<130;i++) pts.push(new Pt(true));
+
+function lines() {
+  for(let a=0;a<pts.length;a++){
+    for(let b=a+1;b<pts.length;b++){
+      const dx=pts[a].x-pts[b].x, dy=pts[a].y-pts[b].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<95){
+        ctx.beginPath();
+        ctx.moveTo(pts[a].x,pts[a].y);
+        ctx.lineTo(pts[b].x,pts[b].y);
+        ctx.strokeStyle=`rgba(0,229,255,${(1-d/95)*.1})`;
+        ctx.lineWidth=.5; ctx.stroke();
+      }
+    }
+    if(pmx!==null){
+      const dx=pts[a].x-pmx, dy=pts[a].y-pmy;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<160){
+        ctx.beginPath();
+        ctx.moveTo(pts[a].x,pts[a].y);
+        ctx.lineTo(pmx,pmy);
+        ctx.strokeStyle=`rgba(168,85,247,${(1-d/160)*.28})`;
+        ctx.lineWidth=.7; ctx.stroke();
+      }
+    }
+  }
+}
+
+(function loop(){
+  ctx.clearRect(0,0,W,H);
+  pts.forEach(p=>{p.tick();p.draw();});
+  lines();
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════
+   TYPEWRITER
+══════════════════════════════════════════ */
+const roles=['Programmer','Developer','Video Editor','AI Enthusiast','Problem Solver','Lifelong Learner'];
+let ri=0, ci=0, del=false;
+const tw=document.getElementById('tw');
+
+function type(){
+  const cur=roles[ri];
+  tw.textContent = del ? cur.slice(0,ci-1) : cur.slice(0,ci+1);
+  del ? ci-- : ci++;
+  let wait = del ? 55 : 105;
+  if(!del&&ci===cur.length){ wait=1900; del=true; }
+  else if(del&&ci===0){ del=false; ri=(ri+1)%roles.length; wait=380; }
+  setTimeout(type,wait);
+}
+setTimeout(type, 2700);
+
+/* ══════════════════════════════════════════
+   NAVBAR SCROLL
+══════════════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('on',scrollY>50);
+});
+
+/* ══════════════════════════════════════════
+   HERO PARALLAX
+══════════════════════════════════════════ */
+const hw=document.getElementById('hw');
+document.addEventListener('mousemove',e=>{
+  if(!hw) return;
+  const xr=(e.clientX/innerWidth-.5)*2;
+  const yr=(e.clientY/innerHeight-.5)*2;
+  hw.style.transform=`translate(${xr*7}px,${yr*5}px)`;
+});
+
+/* ══════════════════════════════════════════
+   INTERSECTION OBSERVER — reveal
+══════════════════════════════════════════ */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+
+document.querySelectorAll('.sl,.st,.sdiv,.rv,.about-txt p,.hi-card,.cc').forEach(el=>io.observe(el));
+
+/* ── About text stagger ── */
+document.querySelectorAll('.about-txt p').forEach((p,i)=>{
+  p.style.transitionDelay=`${i*0.12}s`;
+});
+
+/* ── Highlight card stagger ── */
+document.querySelectorAll('.hi-card').forEach((c,i)=>{
+  c.style.transitionDelay=`${i*0.1}s`;
+});
+
+/* ── Skill tags stagger ── */
+document.querySelectorAll('.sk-cat').forEach(cat=>{
+  const tags=cat.querySelectorAll('.sk-tag');
+  const tio=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        tags.forEach((t,i)=>setTimeout(()=>t.classList.add('vis'),i*55));
+        tio.disconnect();
+      }
+    });
+  },{threshold:.2});
+  tio.observe(cat);
+});
+
+/* ── Project card stagger ── */
+const pcards=document.querySelectorAll('.pc');
+const pio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      pcards.forEach((c,i)=>setTimeout(()=>c.classList.add('vis'),i*90));
+      pio.disconnect();
+    }
+  });
+},{threshold:.06});
+if(pcards.length) pio.observe(pcards[0].parentElement);
+
+/* ── Connect card stagger ── */
+const ccards=document.querySelectorAll('.cc');
+const cio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      ccards.forEach((c,i)=>setTimeout(()=>c.classList.add('vis'),i*70));
+      cio.disconnect();
+    }
+  });
+},{threshold:.1});
+if(ccards.length) cio.observe(ccards[0].parentElement);
+
+/* ── Project card mouse glow ── */
+pcards.forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',`${((e.clientX-r.left)/r.width*100).toFixed(1)}%`);
+    c.style.setProperty('--my',`${((e.clientY-r.top)/r.height*100).toFixed(1)}%`);
+  });
+});
+</script>
 </body>
 </html>
